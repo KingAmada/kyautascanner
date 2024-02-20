@@ -6,7 +6,12 @@ function getQueryParam(param) {
 window.addEventListener('DOMContentLoaded', (event) => {
     // Extract the amount from the query parameters
     const amount = getQueryParam('amount'); // Assuming the amount is passed as a URL query parameter
-
+  // Define the qrCodeErrorCallback function
+    const qrCodeErrorCallback = (errorMessage) => {
+        // Handle scan error, ignore or log
+        console.error(errorMessage);
+        document.getElementById('qr-reader-results').innerText = "Error: Unable to start the QR code scanner.";
+    };
     const html5QrCode = new Html5Qrcode("qr-reader");
     const config = { fps: 10, qrbox: { width: 250, height: 250 } };
     const qrCodeSuccessCallback = (decodedText, decodedResult) => {
