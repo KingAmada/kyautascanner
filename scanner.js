@@ -28,7 +28,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
             document.getElementById('qr-reader-results').innerText = "Error: Invalid QR code or URL.";
         }
     };
-
+  // Function to check if a string is a valid URL
+    function isValidHttpUrl(string) {
+        let url;
+        try {
+            url = new URL(string);
+        } catch (_) {
+            return false;  
+        }
+        return url.protocol === "http:" || url.protocol === "https:";
+    }
     // Start the QR code scanner
     Html5Qrcode.getCameras().then(cameras => {
         if (cameras && cameras.length) {
