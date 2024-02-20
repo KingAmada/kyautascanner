@@ -1,33 +1,23 @@
 window.addEventListener('DOMContentLoaded', (event) => {
+    // Extract the amount from the query parameters
+    const amount = getQueryParam('amount'); // Assuming the amount is passed as a URL query parameter
+
     const html5QrCode = new Html5Qrcode("qr-reader");
     const config = { fps: 10, qrbox: { width: 250, height: 250 } };
     const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-        // Check if the decoded text is a valid URL
-        if (isValidHttpUrl(decodedText)) {
-            // If it's a valid URL, navigate to it
-            window.location.href = decodedText;
+        // Append the amount parameter to the decoded URL, if it's valid and amount is present
+        let urlWithAmount = decodedText;
+        if (isValidHttpUrl(decodedText) && amount) {
+            urlWithAmount += `?amount=${encodeURIComponent(amount)}`;
+        }
+
+        // Navigate to the modified URL or show an error message
+        if (isValidHttpUrl(urlWithAmount)) {
+            window.location.href = urlWithAmount;
         } else {
-            // If it's not a valid URL, display an error message
-            document.getElementById('qr-reader-results').innerText = "Error: This is not the right QR code.";
+            document.getElementById('qr-reader-results').innerText = "Error: Invalid QR code or URL.";
         }
     };
-    const qrCodeErrorCallback = (errorMessage) => {
-        // Handle scan error, ignore or log
-        console.error(errorMessage);
-    };
-
-    // Check if a string is a valid URL
-    function isValidHttpUrl(string) {
-        let url;
-        
-        try {
-            url = new URL(string);
-        } catch (_) {
-            return false;  
-        }
-
-        return url.protocol === "http:" || url.protocol === "https:";
-    }
 
     // Start the QR code scanner
     Html5Qrcode.getCameras().then(cameras => {
