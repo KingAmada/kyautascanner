@@ -1,3 +1,8 @@
+// Function to extract query parameters from the URL
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
 window.addEventListener('DOMContentLoaded', (event) => {
     // Extract the amount from the query parameters
     const amount = getQueryParam('amount'); // Assuming the amount is passed as a URL query parameter
