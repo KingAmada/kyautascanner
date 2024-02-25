@@ -46,14 +46,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // Start the QR code scanner
     Html5Qrcode.getCameras().then(cameras => {
         if (cameras && cameras.length) {
-            let selectedCameraId = cameras[1].id; // Default to the first camera (usually the front camera on mobile devices)
+            let selectedCameraId = cameras[0].id; // Default to the first camera (usually the front camera on mobile devices)
 
             // Prefer the back camera if available
             const backCamera = cameras.find(camera => camera.label.toLowerCase().includes('back'));
             if (backCamera) {
                 selectedCameraId = backCamera.id;
             }
-
+//console.log("cameras found."+selectedCameraId);
             html5QrCode.start(selectedCameraId, config, qrCodeSuccessCallback, qrCodeErrorCallback)
                 .catch(err => console.error(`Unable to start QR Code scanner: ${err}`));
         } else {
