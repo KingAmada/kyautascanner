@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // Extract the amount from the query parameters
     const amount = getQueryParam('amount'); // Assuming the amount is passed as a URL query parameter
     const html5QrCode = new Html5Qrcode("qr-reader");
-    const config = { fps: 10, qrbox: { width: 250px, height: 250px } };
+    const config = { fps: 10, qrbox: { width: 250px height: 250px } };
     let scanning = false; // Flag to indicate scanning state
     const qrCodeSuccessCallback = (decodedText, decodedResult) => {
         // Append the amount parameter to the decoded URL, if it's valid and amount is present
