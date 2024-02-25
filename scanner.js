@@ -46,9 +46,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // Start the QR code scanner
     Html5Qrcode.getCameras().then(cameras => {
         if (cameras && cameras.length) {
-            const cameraId = cameras[0].id; // or use cameras[1].id for the back camera
-            html5QrCode.start(cameraId, config, qrCodeSuccessCallback, qrCodeErrorCallback)
-            .catch(err => console.log(`Unable to start QR Code scanner: ${err}`));
+            let selectedCameraId = cameras[0].id; // Default to the first camera (usually the front camera on mobile devices)
+
+            // Prefer the back camera if available
+            const backCamera = cameras.find(camera => camera.label.toLowerCase().includes('back'));
+            if (backCamera) {
+                selectedCameraId = backCamera.id;
+            }
+
+            html5QrCode.start(selectedCameraId, config, qrCodeSuccessCallback, qrCodeErrorCallback)
+                .catch(err => console.error(`Unable to start QR Code scanner: ${err}`));
+        } else {
+            console.error("No cameras found.");
         }
-    }).catch(err => console.log(`Unable to fetch cameras: ${err}`));
+    }).catch(err => console.error(`Unable to fetch cameras: ${err}`));
 });
