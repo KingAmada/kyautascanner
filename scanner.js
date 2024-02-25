@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
          scanning = false; // Reset scanning flag
         let urlWithAmount = decodedText;
         if (isValidHttpUrl(decodedText) && amount) {
-            urlWithAmount += `?amount=${encodeURIComponent(amount)}`;
+            urlWithAmount += `&amount=${encodeURIComponent(amount)}`;
         }
 
         // Navigate to the modified URL or show an error message
